@@ -25,11 +25,13 @@ const RegisterForm: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const pseudotRef = useRef<HTMLInputElement>(null);
+  const nomClubRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   const ref = useRef<HTMLInputElement>(null);
+
   const handleSubmit = () => {
     if (
       firstNameRef.current !== null &&
@@ -39,12 +41,15 @@ const RegisterForm: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
       passwordRef.current !== null &&
       confirmPasswordRef.current !== null
     ) {
-      console.log("premier condition : ", {
-        firstName: firstNameRef.current,
-        lastName: lastNameRef.current,
-        pseudo: pseudotRef.current,
-        password: passwordRef.current,
-      });
+
+      console.log( {
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        pseudo: pseudotRef.current.value,
+        password: passwordRef.current.value,
+        confirmPassword : confirmPasswordRef.current.value
+      })
+
       if (passwordRef.current.value == confirmPasswordRef.current.value) {
         setFormData({
           firstName: firstNameRef.current.value,
@@ -61,22 +66,59 @@ const RegisterForm: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
     console.log("voici les data du formulaire : ", formData);
   };
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [pseudo, setPseudo] = useState('');
+  const [email, setEmail] = useState('');
+  const [nomClub, setNomClub] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleFirstNameChange = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value);
+  };
+  
+  const handleLastNameChange = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
+
+  const handlePseudo = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setPseudo(event.target.value);
+  };
+
+  const handleNomCLub = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setNomClub(event.target.value);
+  };
+
+  const handleEmail= (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPassword = (event :  React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(event.target.value);
+  };
+
   return (
     <Stack sx={{ width: "200px", gap: "1px" }}>
       <FormControl ref={ref}>
-        <TextField placeholder="Write your firstName" inputRef={firstNameRef} />
-        <TextField placeholder="Write your lastName" inputRef={lastNameRef} />
-        <TextField placeholder="Write your pseudo" inputRef={pseudotRef} />
-        <TextField placeholder="Write your email" inputRef={emailRef} />
+        <TextField placeholder="Write your firstName" inputRef={firstNameRef} value={firstName} onChange={handleFirstNameChange} />
+        <TextField placeholder="Write your lastName" inputRef={lastNameRef} value={lastName} onChange={handleLastNameChange} />
+        <TextField placeholder="Write your pseudo" inputRef={pseudotRef} value={pseudo} onChange={handlePseudo} />
+        <TextField placeholder="Write your email" inputRef={nomClubRef} value={nomClub} onChange={handleNomCLub} />
+        <TextField placeholder="Write your email" inputRef={emailRef} value={email} onChange={handleEmail} />
         <TextField
           placeholder="password"
-          name="password"
           inputRef={passwordRef}
+          value={password} onChange={handlePassword} 
         />
         <TextField
           placeholder="confirm password"
-          name="confirmPassworf"
-          ref={confirmPasswordRef}
+          inputRef={confirmPasswordRef}
+          value={confirmPassword} onChange={handleConfirmPassword} 
         />
         <Button onClick={handleSubmit}>Submit</Button>
         <p onClick={onSwitch}>se connecter </p>
